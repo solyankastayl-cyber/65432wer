@@ -337,7 +337,7 @@ export function FractalHybridChart({
       stats: overlay?.stats || {},
       unifiedPath,
     };
-  }, [chart, focusPack, mode, symbol, macroOverlay]);
+  }, [chart, focusPack, mode, symbol, macroOverlay, btcSpxOverlay]);
   
   // Get primary replay match - BLOCK 73.1: Use weighted primaryMatch
   // BLOCK 73.4: Override with custom replay pack if selected
