@@ -671,6 +671,15 @@ async function main() {
   const { spxMacroOverlayRoutes } = await import('./modules/spx-macro-overlay/index.js');
   await spxMacroOverlayRoutes(app);
   
+  // ═══════════════════════════════════════════════════════════════
+  // HORIZON META — Adaptive Similarity + Hierarchy (BLOCK 77)
+  // ═══════════════════════════════════════════════════════════════
+  console.log('[Fractal] Registering Horizon Meta (Adaptive Similarity + Hierarchy)...');
+  const { horizonMetaRoutes, ensureProjectionTrackingIndexes } = await import('./modules/fractal/horizon-meta/index.js');
+  await horizonMetaRoutes(app);
+  await ensureProjectionTrackingIndexes();
+  console.log('[Fractal] ✅ Horizon Meta registered at /api/fractal/horizon-meta/*');
+  
   // Graceful shutdown
   const shutdown = async (signal: string) => {
     console.log(`[Fractal] Received ${signal}, shutting down...`);
