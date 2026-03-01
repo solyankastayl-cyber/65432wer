@@ -232,6 +232,9 @@ const OnchainValidationPage = lazy(() => import("./pages/OnchainValidationPage")
 
 // Fractal V2.1 - Pattern Analysis Engine (BLOCK 47-50)
 const FractalPage = lazy(() => import("./pages/FractalPage"));
+
+// BTC Fractal Page (1:1 with SPX structure + SPX Overlay)
+const BtcFractalPage = lazy(() => import("./pages/BtcFractalPage"));
 const FractalAdminPage = lazy(() => import("./pages/FractalAdminPage"));
 // AeBrainPage removed - replaced by Brain v4 Decision Engine
 
