@@ -602,5 +602,6 @@ export async function buildDxyTerminalPack(
     replay,
     hybrid,
     macro: finalMacroPack,
+    horizonMeta: horizonMetaSummary,
   };
 }
