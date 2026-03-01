@@ -577,19 +577,19 @@ const AnalogsBlock = ({ analogs }) => {
 };
 
 // ═══════════════════════════════════════════════════════════════
-// SPX OVERLAY ENGINE (NEW - Cross-Asset SPX→BTC)
+// BTC ∧ SPX ENGINE (Cross-Asset SPX→BTC Overlay)
 // ═══════════════════════════════════════════════════════════════
 
 const SpxOverlayBlock = ({ overlay, horizon }) => {
   if (!overlay) return null;
   
   return (
-    <div className="bg-white rounded-xl p-6 mb-6 border border-purple-100" data-testid="btc-spx-overlay">
+    <div className="bg-white rounded-xl p-6 mb-6 border border-emerald-100" data-testid="btc-spx-overlay">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Target className="w-5 h-5 text-purple-600" />
+          <Target className="w-5 h-5 text-emerald-600" />
           <Tooltip content={TOOLTIPS.crossAsset}>
-            <h2 className="text-lg font-semibold text-gray-900">Cross-Asset Overlay Engine</h2>
+            <h2 className="text-lg font-semibold text-gray-900">BTC ∧ SPX Engine</h2>
           </Tooltip>
         </div>
         <span className="text-xs text-gray-400">{horizon} horizon</span>
@@ -600,14 +600,14 @@ const SpxOverlayBlock = ({ overlay, horizon }) => {
         <p className="text-xs text-gray-400 uppercase mb-3">Composition</p>
         <div className="grid grid-cols-6 gap-4">
           <div>
-            <p className="text-xs text-gray-500 mb-1">Base Hybrid BTC</p>
+            <p className="text-xs text-gray-500 mb-1">BTC Hybrid</p>
             <p className={`text-lg font-semibold ${overlay.baseHybrid > 0 ? 'text-emerald-600' : overlay.baseHybrid < 0 ? 'text-red-600' : 'text-gray-700'}`}>
               {overlay.baseHybrid > 0 ? '+' : ''}{overlay.baseHybrid?.toFixed(2) || '0.00'}%
             </p>
           </div>
           <div>
-            <p className="text-xs text-gray-500 mb-1">SPX Impact</p>
-            <p className={`text-lg font-semibold ${overlay.spxImpact > 0 ? 'text-purple-600' : overlay.spxImpact < 0 ? 'text-purple-600' : 'text-gray-700'}`}>
+            <p className="text-xs text-gray-500 mb-1">SPX Final Impact</p>
+            <p className={`text-lg font-semibold ${overlay.spxImpact > 0 ? 'text-blue-600' : overlay.spxImpact < 0 ? 'text-blue-600' : 'text-gray-700'}`}>
               {overlay.spxImpact > 0 ? '+' : ''}{overlay.spxImpact?.toFixed(2) || '0.00'}%
             </p>
           </div>
@@ -623,8 +623,8 @@ const SpxOverlayBlock = ({ overlay, horizon }) => {
             <p className="text-xs text-gray-500 mb-1">Overlay Weight</p>
             <p className="text-lg font-semibold text-gray-700">{overlay.overlayWeight?.toFixed(2) || '0.50'}</p>
           </div>
-          <div className="bg-purple-50 rounded-lg p-2 -mt-1">
-            <p className="text-xs text-purple-600 mb-1">Final Adjusted BTC</p>
+          <div className="bg-emerald-50 rounded-lg p-2 -mt-1">
+            <p className="text-xs text-emerald-600 mb-1">BTC Adjusted</p>
             <p className={`text-xl font-bold ${overlay.finalAdjusted > 0 ? 'text-emerald-600' : overlay.finalAdjusted < 0 ? 'text-red-600' : 'text-gray-700'}`}>
               {overlay.finalAdjusted > 0 ? '+' : ''}{overlay.finalAdjusted?.toFixed(2) || '0.00'}%
             </p>
@@ -664,8 +664,8 @@ const SpxOverlayBlock = ({ overlay, horizon }) => {
       {/* Formula explanation */}
       <div className="mt-4 p-3 bg-gray-50 rounded-lg">
         <p className="text-xs text-gray-500">
-          <span className="font-mono">R_adj = R_btc + g × w × β × R_spx</span>
-          <span className="ml-2">where g={overlay.guard?.toFixed(2) || '0.78'}, w={overlay.overlayWeight?.toFixed(2) || '0.50'}</span>
+          <span className="font-mono">BTC_adj = BTC_hybrid + g × w × β × SPX_final</span>
+          <span className="ml-2">где g={overlay.guard?.toFixed(2) || '0.78'}, w={overlay.overlayWeight?.toFixed(2) || '0.50'}</span>
         </p>
       </div>
     </div>
