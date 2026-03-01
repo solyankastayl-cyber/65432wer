@@ -193,6 +193,19 @@ export interface TerminalMacroPack {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// BLOCK 77: HORIZON META (Adaptive Similarity + Hierarchy)
+// ═══════════════════════════════════════════════════════════════
+
+export interface HorizonMetaSummary {
+  enabled: boolean;
+  mode: 'shadow' | 'on';
+  consensusState?: 'BULLISH' | 'BEARISH' | 'HOLD';
+  consensusBias?: number;
+  divergenceWarnings?: string[];
+  weightsEff?: Record<number, number>;
+}
+
+// ═══════════════════════════════════════════════════════════════
 // MAIN TERMINAL PACK
 // ═══════════════════════════════════════════════════════════════
 
@@ -211,6 +224,9 @@ export interface DxyTerminalPack {
   
   // B2: Macro overlay (optional - null if no macro data)
   macro?: TerminalMacroPack;
+  
+  // BLOCK 77: Horizon Meta (Adaptive Similarity + Hierarchy)
+  horizonMeta?: HorizonMetaSummary;
 }
 
 // ═══════════════════════════════════════════════════════════════
