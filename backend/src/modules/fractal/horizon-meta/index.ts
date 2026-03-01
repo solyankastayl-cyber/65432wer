@@ -38,3 +38,9 @@ export {
   type SaveSnapshotInput,
   type GetTrackingInput,
 } from './projection_tracking.service.js';
+
+// Routes
+export { horizonMetaRoutes } from './horizon_meta.routes.js';
+
+// Tests
+export { runHorizonMetaTests } from './horizon_meta.tests.js';
