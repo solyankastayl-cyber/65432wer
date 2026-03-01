@@ -683,9 +683,9 @@ export function drawMacroForecast(
     const px = dayToX(marker.day);
     const py = y(point.price);
     
-    // Circle marker (orange for macro - main line)
+    // Circle marker (use main line color)
     ctx.save();
-    ctx.fillStyle = '#f59e0b';
+    ctx.fillStyle = markerColor;
     ctx.beginPath();
     ctx.arc(px, py, 4, 0, Math.PI * 2);
     ctx.fill();
