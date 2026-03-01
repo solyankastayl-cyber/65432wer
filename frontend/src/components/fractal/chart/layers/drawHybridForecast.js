@@ -740,7 +740,7 @@ export function drawMacroForecast(
     ctx.restore();
   }
   
-  // === 10. LEGEND (Macro first as main, Hybrid as hint) ===
+  // === 10. LEGEND (Main line first, Hybrid as hint) ===
   // POSITION LOGIC: If forecast goes UP, put legend at BOTTOM
   // If forecast goes DOWN, put legend at TOP
   const lastMacroPrice = macroData.length > 0 ? macroData[macroData.length - 1].price : null;
@@ -756,27 +756,31 @@ export function drawMacroForecast(
   
   ctx.save();
   
-  // MACRO legend (main line) - shown first
+  // Determine labels based on symbol
+  const mainLabel = isBtcMode ? 'BTC Adjusted' : (symbol === 'SPX' ? 'SPX Adjusted' : 'Macro');
+  const hintLabel = isBtcMode ? 'BTC Hybrid' : 'Hybrid';
+  
+  // MAIN legend (primary line) - shown first
   if (macroData.length > 0) {
-    ctx.fillStyle = '#f59e0b';
+    ctx.fillStyle = mainLineColor;
     ctx.beginPath();
     ctx.arc(legendX, legendY, 5, 0, Math.PI * 2);
     ctx.fill();
     ctx.fillStyle = '#333';
     ctx.font = "bold 11px system-ui";
     ctx.textAlign = 'left';
-    ctx.fillText('Macro', legendX + 12, legendY + 4);
+    ctx.fillText(mainLabel, legendX + 12, legendY + 4);
   }
   
   // HYBRID legend (secondary/hint)
   if (hybridData.length > 0) {
-    ctx.fillStyle = 'rgba(34, 197, 94, 0.8)';
+    ctx.fillStyle = hintLineColor;
     ctx.beginPath();
     ctx.arc(legendX, legendY + 18, 4, 0, Math.PI * 2);
     ctx.fill();
     ctx.fillStyle = '#444';
     ctx.font = "10px system-ui";
-    ctx.fillText('Hybrid', legendX + 12, legendY + 22);
+    ctx.fillText(hintLabel, legendX + 12, legendY + 22);
   }
   
   ctx.restore();
