@@ -50,6 +50,16 @@ import { buildMacroContext } from '../../dxy-macro-core/services/macro_context.s
 // B2+: Band reshaping from v2 service
 import { reshapeBands } from './dxy_macro_v2.service.js';
 
+// BLOCK 77: Horizon Meta (Adaptive Similarity + Hierarchy)
+import {
+  getHorizonMetaService,
+  saveProjectionSnapshot,
+  type HorizonMetaInput,
+  type HorizonMetaPack,
+  type HorizonKey,
+  type HorizonBias,
+} from '../../fractal/horizon-meta/index.js';
+
 // ═══════════════════════════════════════════════════════════════
 // HELPER: Generate match ID
 // ═══════════════════════════════════════════════════════════════
