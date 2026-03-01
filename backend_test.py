@@ -106,7 +106,7 @@ class FractalAPITester:
         return success
 
     def test_btc_fractal(self):
-        """Test BTC Fractal API"""
+        """Test BTC Fractal API including new overlay features"""
         self.log("=== BTC FRACTAL TESTS ===")
         
         # 1. BTC Signal endpoint
@@ -132,7 +132,36 @@ class FractalAPITester:
             expected_status=200
         )
 
-        return success1 and success2
+        # 3. SPX→BTC Overlay Coefficients (new feature)
+        success3, response3 = self.run_test(
+            "SPX→BTC Overlay Coefficients",
+            "GET",
+            "/api/overlay/coeffs?base=BTC&driver=SPX&horizon=30d"
+        )
+        
+        if success3 and isinstance(response3, dict):
+            if "coeffs" in response3:
+                coeffs = response3["coeffs"]
+                self.log(f"✅ SPX→BTC coeffs: beta={coeffs.get('beta', 0):.4f}, rho={coeffs.get('rho', 0):.4f}")
+            else:
+                self.log(f"⚠️  Overlay coeffs response structure: {list(response3.keys())}")
+
+        # 4. SPX→BTC Overlay Explanation
+        success4, response4 = self.run_test(
+            "SPX→BTC Overlay Explanation",
+            "GET", 
+            "/api/overlay/explain?base=BTC&driver=SPX&horizon=30d"
+        )
+        
+        if success4 and isinstance(response4, dict):
+            if "composition" in response4:
+                comp = response4["composition"] 
+                final = comp.get("finalAdjusted", {}).get("label", "0.00%")
+                self.log(f"✅ SPX overlay final adjusted: {final}")
+            else:
+                self.log(f"⚠️  Overlay explain response structure: {list(response4.keys())}")
+
+        return success1 and success2 and success3
 
     def test_dxy_fractal(self):
         """Test DXY Fractal API"""
