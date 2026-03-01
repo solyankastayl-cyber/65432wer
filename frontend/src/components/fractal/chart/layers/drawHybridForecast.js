@@ -708,12 +708,12 @@ export function drawMacroForecast(
   // === 9. END MARKERS ===
   const endX = dayToX(N);
   
-  // Macro end marker (main, largest) - ORANGE
+  // Main line end marker (largest) - uses mainLineColor
   if (macroData.length > 0) {
     const lastMacro = macroData[macroData.length - 1];
     const lastMacroY = y(lastMacro.price);
     ctx.save();
-    ctx.fillStyle = '#f59e0b';
+    ctx.fillStyle = mainLineColor;
     ctx.beginPath();
     ctx.arc(endX, lastMacroY, 6, 0, Math.PI * 2);
     ctx.fill();
@@ -724,12 +724,12 @@ export function drawMacroForecast(
     ctx.restore();
   }
   
-  // Hybrid end marker (secondary, smaller) - GREEN
+  // Hybrid end marker (secondary, smaller) - uses hintLineColor
   if (hybridData.length > 0) {
     const lastHybrid = hybridData[hybridData.length - 1];
     const lastHybridY = y(lastHybrid.price);
     ctx.save();
-    ctx.fillStyle = 'rgba(34, 197, 94, 0.8)';
+    ctx.fillStyle = hintLineColor;
     ctx.beginPath();
     ctx.arc(endX, lastHybridY, 4, 0, Math.PI * 2);
     ctx.fill();
