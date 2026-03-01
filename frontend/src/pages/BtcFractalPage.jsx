@@ -335,7 +335,7 @@ const ChartModes = ({ mode, onModeChange }) => {
     { id: 'synthetic', label: 'Synthetic' },
     { id: 'replay', label: 'Replay' },
     { id: 'hybrid', label: 'Hybrid' },
-    { id: 'crossAsset', label: 'Cross-Asset', recommended: true },
+    { id: 'crossAsset', label: 'BTC ∧ SPX', recommended: true },
   ];
   
   return (
