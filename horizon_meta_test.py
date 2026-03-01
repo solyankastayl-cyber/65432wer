@@ -173,7 +173,8 @@ class HorizonMetaTester:
         success, response = self.run_test(
             "Horizon Meta Unit Tests",
             "POST",
-            "/api/fractal/horizon-meta/test"
+            "/api/fractal/horizon-meta/test",
+            data={}  # Empty JSON body instead of None
         )
         
         if success and isinstance(response, dict):
