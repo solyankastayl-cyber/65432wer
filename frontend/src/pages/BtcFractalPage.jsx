@@ -145,12 +145,11 @@ const TOOLTIPS = {
   ),
   crossAsset: (
     <div className="space-y-1">
-      <p className="font-medium">Cross-Asset SPX Overlay ★</p>
-      <p className="text-gray-300">BTC Hybrid adjusted by SPX Final projection.</p>
-      <p><span className="text-emerald-400">Primary</span> — BTC Adjusted (solid)</p>
-      <p><span className="text-gray-400">Dotted</span> — BTC Hybrid baseline</p>
-      <p><span className="text-purple-400">Dotted</span> — SPX Final influence</p>
-      <p className="text-amber-400 mt-1">Formula: R_adj = R_btc + g×w×β×R_spx</p>
+      <p className="font-medium">BTC ∧ SPX — Cross-Asset Overlay</p>
+      <p className="text-gray-300">BTC Hybrid скорректированный финальным SPX.</p>
+      <p><span className="text-emerald-400">Основная линия</span> — BTC Adjusted (скорректированный)</p>
+      <p><span className="text-gray-400">Пунктир</span> — BTC Hybrid (базовый)</p>
+      <p className="text-amber-400 mt-1">Формула: R_adj = R_btc + g×w×β×R_spx</p>
     </div>
   ),
   forecast: (
