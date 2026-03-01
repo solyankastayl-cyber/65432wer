@@ -1,7 +1,7 @@
 # Fractal Index Platform PRD
 
 ## Original Problem Statement
-Развёртывание проекта из GitHub репозитория https://github.com/solyankastayl-cyber/765434567
+Развёртывание проекта из GitHub репозитория https://github.com/solyankastayl-cyber/Finalll23
 - Модуль фракталов для валютных пар (DXY) - основной фокус разработки
 - SPX и Bitcoin логика (в заморозке - поднять без изменений)
 - Админка
@@ -26,33 +26,43 @@
 
 ## What's Been Implemented
 
-### Session 1: Deployment (2026-02-28)
-- Развёртывание из GitHub
+### Session 1: Deployment (2026-03-01)
+- Клонирование из GitHub репозитория
 - TypeScript backend + Python proxy настроены
-- Cold Start bootstrap для SPX/DXY/BTC данных
+- Cold Start bootstrap для SPX/DXY/BTC данных из CSV
 - FRED API ключ установлен
-- Все модули зарегистрированы и работают
+- Все модули зарегистрированы и работают:
+  - BTC Terminal: /api/btc/v2.1/*
+  - SPX Terminal: /api/spx/v2.1/*
+  - DXY Module: /api/fractal/dxy/*
+  - Brain v2: /api/brain/v2/*
+  - Index Engine V2: /api/v2/index/*
+  - Admin Auth: /api/admin/*
+  - И многие другие модули
 
-### Session 2: SPX Page Redesign (2026-03-01)
-- **Переключен роут /fractal/spx на SpxFractalPage** (ранее использовался старый FractalPage)
-- **Исправлен парсинг API данных** - horizons теперь правильно читается как массив
-- **Добавлены недостающие хелперы**: getSentimentDot, getSentimentText
-- **Визуал SPX = визуал DXY**:
-  - Header Strip: Signal, Confidence, Risk, Phase, As of, REAL badge
-  - SPX Verdict Card с dropdown горизонтов
-  - Market State, Directional Bias, Expected (P50), Range, Position Size
-  - "What would change this view" секция
-  - Chart tabs: Synthetic, Replay, Hybrid, Macro ★
-  - Forecast by Horizon таблица
-  - Risk Context блок
-  - Historical Analogs таблица
+### Тестирование (2026-03-01)
+- Backend: 71.4% тестов пройдено (10/14)
+- Frontend: 100% страниц загружаются корректно
+- Основные API работают:
+  - /api/health - OK
+  - /api/fractal/signal - BTC NEUTRAL signal
+  - /api/ui/fractal/dxy/overview - USD_UP verdict, +5.18%
+  - /api/fractal/spx - LONG signal, DISTRIBUTION phase
+  - /api/brain/v2/status - ACTIVE
 
 ## API Endpoints (Работающие)
 - GET /api/health - Health check
-- GET /api/fractal/spx - SPX fractal data
+- GET /api/fractal/signal - BTC fractal signal
 - GET /api/ui/fractal/dxy/overview - DXY данные
-- GET /api/fractal/signal - BTC данные
+- GET /api/fractal/spx - SPX данные
 - GET /api/brain/v2/status - Brain status
+- GET /api/v2/index/:symbol/pack - Index Engine
+- GET /api/system/health - System health
+
+## Known Issues (Low Priority)
+1. WebSocket connections failing (/api/ws, /ws) - real-time updates affected
+2. Some alternative endpoints 404 (focus pack routes) - main APIs work
+3. Brain dashboard loading time ~15 seconds
 
 ## Prioritized Backlog
 
@@ -61,16 +71,17 @@
 - [x] TypeScript backend запуск
 - [x] MongoDB подключение
 - [x] FRED API интеграция
-- [x] SPX страница приведена к формату DXY
+- [x] Cold Start bootstrap данных
 
 ### P1 (High Priority)
-- [ ] Динамические invalidations для "What would change this view"
-- [ ] Полировка Macro режима для SPX
+- [ ] Исправить WebSocket соединения для real-time обновлений
+- [ ] Полировка Macro режима для DXY
 
 ### P2 (Medium Priority)
 - [ ] Оптимизация загрузки Macro Brain
 - [ ] Mobile responsive improvements
 
 ## Next Tasks
-1. Детальная полировка SPX (по запросу пользователя)
-2. Любые дополнительные доработки логики фракталов
+1. Доработки модуля фракталов DXY (по запросу пользователя)
+2. Исправление WebSocket (если нужны real-time обновления)
+3. Любые дополнительные доработки логики
