@@ -159,8 +159,8 @@ function ForecastTooltip({ day, forecastData, currentPrice, horizonDays, symbol 
                 padding: '3px 0',
                 borderBottom: '1px solid #f0f0f0'
               }}>
-                <span style={{ color: "#10B981", fontWeight: 600, display: 'flex', alignItems: 'center', gap: 3, fontSize: 10 }}>
-                  <span style={{ width: 7, height: 7, borderRadius: '50%', backgroundColor: '#10B981' }}></span>
+                <span style={{ color: symbol === 'BTC' ? '#1e3a5f' : '#f59e0b', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 3, fontSize: 10 }}>
+                  <span style={{ width: 7, height: 7, borderRadius: '50%', backgroundColor: symbol === 'BTC' ? '#1e3a5f' : '#f59e0b' }}></span>
                   {symbol === 'BTC' ? 'BTC Adjusted' : symbol === 'SPX' ? 'SPX Adjusted' : 'Macro'}
                 </span>
                 <div style={{ textAlign: 'right' }}>
@@ -172,15 +172,15 @@ function ForecastTooltip({ day, forecastData, currentPrice, horizonDays, symbol 
               </div>
             )}
             
-            {/* Hybrid Price (dashed) */}
+            {/* Hybrid Price (dashed) - приглушённый зелёный */}
             {hybridPrice && (
               <div style={{ 
                 display: "flex", 
                 justifyContent: "space-between", 
                 padding: '2px 0'
               }}>
-                <span style={{ color: "#9CA3AF", fontWeight: 500, display: 'flex', alignItems: 'center', gap: 3, fontSize: 9 }}>
-                  <span style={{ width: 6, height: 2, backgroundColor: '#9CA3AF', borderRadius: 1 }}></span>
+                <span style={{ color: "rgba(34, 197, 94, 0.7)", fontWeight: 500, display: 'flex', alignItems: 'center', gap: 3, fontSize: 9 }}>
+                  <span style={{ width: 12, height: 2, backgroundColor: 'rgba(34, 197, 94, 0.6)', borderRadius: 1, borderTop: '1px dashed rgba(34, 197, 94, 0.6)' }}></span>
                   {symbol === 'BTC' ? 'BTC Hybrid' : symbol === 'SPX' ? 'SPX Hybrid' : 'Hybrid'}
                 </span>
                 <div style={{ textAlign: 'right' }}>
