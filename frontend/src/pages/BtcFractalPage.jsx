@@ -231,7 +231,7 @@ const HorizonDropdown = ({ value, onChange }) => {
         onClick={() => setOpen(!open)}
         className="flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-lg hover:border-gray-300"
       >
-        <span className="font-semibold text-amber-600">{selected.label}</span>
+        <span className="font-semibold text-gray-900">{selected.label}</span>
         <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       
@@ -244,7 +244,7 @@ const HorizonDropdown = ({ value, onChange }) => {
                 key={option.value}
                 onClick={() => { onChange(option.value); setOpen(false); }}
                 className={`w-full px-4 py-2.5 text-left text-sm font-medium transition-colors ${
-                  option.value === value ? 'bg-amber-50 text-amber-600' : 'text-gray-600 hover:bg-gray-50'
+                  option.value === value ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50'
                 }`}
               >
                 {option.label}
