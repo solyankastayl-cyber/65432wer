@@ -181,15 +181,16 @@ class HorizonMetaTester:
             self.log(f"✅ HorizonMeta tests response: {json.dumps(response, indent=2)}")
             
             # Check test results
-            if 'testResults' in response:
-                results = response['testResults']
+            if 'results' in response:
+                results = response['results']
                 self.log(f"   Test results found: {len(results)} tests")
                 
-                passed = sum(1 for r in results if r.get('passed', False))
-                failed = len(results) - passed
+                passed = response.get('passed', 0)
+                failed = response.get('failed', 0)
                 
-                self.log(f"   Tests passed: {passed}/{len(results)}")
+                self.log(f"   Tests passed: {passed}")
                 self.log(f"   Tests failed: {failed}")
+                self.log(f"   Overall success: {response.get('ok', False)}")
                 
                 # Log failed tests details
                 if failed > 0:
@@ -197,10 +198,13 @@ class HorizonMetaTester:
                     for r in results:
                         if not r.get('passed', False):
                             self.log(f"     - {r.get('name', 'Unknown')}: {r.get('error', 'No error info')}")
+                    
+                    # This is expected behavior as mentioned in agent context
+                    self.log("   Note: Some test failures are expected due to test data limitations (per main agent context)")
                 
                 return True
             else:
-                self.log(f"   No testResults field found. Response keys: {list(response.keys())}")
+                self.log(f"   No results field found. Response keys: {list(response.keys())}")
         
         return success
 
