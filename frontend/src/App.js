@@ -633,10 +633,10 @@ function App() {
                   FRACTAL V2.1 — Historical Pattern Analysis Engine
                   Main tab in sidebar with own sub-routes
                   ═══════════════════════════════════════════════════════════ */}
-              <Route path="/fractal" element={<FractalPage />} />
-              <Route path="/fractal/btc" element={<FractalPage />} />
-              <Route path="/fractal/signal" element={<FractalPage />} />
-              <Route path="/fractal/matches" element={<FractalPage />} />
+              <Route path="/fractal" element={<BtcFractalPage />} />
+              <Route path="/fractal/btc" element={<BtcFractalPage />} />
+              <Route path="/fractal/signal" element={<BtcFractalPage />} />
+              <Route path="/fractal/matches" element={<BtcFractalPage />} />
               <Route path="/fractal/backtest" element={<FractalPage />} />
               {/* SPX Fractal — Decision Engine approach (mirrors DXY) */}
               <Route path="/fractal/spx" element={<SpxFractalPage />} />
