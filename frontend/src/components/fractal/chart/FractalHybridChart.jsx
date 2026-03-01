@@ -283,6 +283,42 @@ export function FractalHybridChart({
       aftermathDays = macroHorizonDays;
     }
     
+    // BTC ∧ SPX MODE: Build adjustedPath from BTC hybrid + SPX influence
+    if (mode === 'macro' && symbol === 'BTC') {
+      // For BTC, we use the existing hybridPath and add SPX overlay influence
+      const hybridPath = unifiedPath?.hybridPath || [];
+      const beta = btcSpxOverlay?.beta || 0.20;
+      const weight = btcSpxOverlay?.weight || 0.50;
+      const guard = btcSpxOverlay?.guard || 0.78;
+      
+      // Calculate adjusted path using formula: R_adj = R_btc + g × w × β × R_spx
+      // For now, use a simple adjustment factor
+      const spxInfluence = 0.0241; // SPX expected return (would come from SPX API)
+      const adjustmentFactor = guard * weight * beta * spxInfluence;
+      
+      if (hybridPath.length > 0) {
+        const btcAdjustedPath = hybridPath.map((p, idx) => {
+          const adjustedPct = (p.pct || 0) + adjustmentFactor * 100 * (idx / hybridPath.length);
+          const adjustedPrice = currentPrice * (1 + adjustedPct / 100);
+          return {
+            t: idx,
+            price: adjustedPrice,
+            pct: adjustedPct
+          };
+        });
+        
+        unifiedPath = {
+          ...unifiedPath,
+          macroPath: btcAdjustedPath, // Use macroPath slot for adjusted
+          hybridPath, // Keep original hybrid as dashed
+          macroLabel: 'BTC Adjusted',
+          hybridLabel: 'BTC Hybrid',
+          isBtcSpxMode: true,
+          btcSpxOverlay: btcSpxOverlay,
+        };
+      }
+    }
+    
     return {
       pricePath: fp.pricePath || fp.path || [],
       upperBand: fp.upperBand || [],
