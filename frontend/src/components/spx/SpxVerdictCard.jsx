@@ -110,7 +110,7 @@ const SpxVerdictCard = ({ overlay, consensus, meta, focus }) => {
         <div>
           <p className="text-xs text-gray-400 uppercase mb-1">Range (P10–P90)</p>
           <p className="text-sm font-medium text-gray-700">
-            {rangeP10}% … {rangeP90}%
+            {rangeP10}% – {rangeP90}%
           </p>
         </div>
         

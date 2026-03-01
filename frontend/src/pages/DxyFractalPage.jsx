@@ -370,7 +370,7 @@ const VerdictCard = ({ verdict, horizon, onHorizonChange }) => {
         <div>
           <p className="text-xs text-gray-400 uppercase mb-1">Range (P10–P90)</p>
           <p className="text-sm font-medium text-gray-700">
-            {verdict.rangeP10}% … {verdict.rangeP90}%
+            {verdict.rangeP10}% – {verdict.rangeP90}%
           </p>
         </div>
         

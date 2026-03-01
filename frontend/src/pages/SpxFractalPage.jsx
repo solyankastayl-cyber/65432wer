@@ -396,7 +396,7 @@ const VerdictCard = ({ verdict, horizon, onHorizonChange }) => {
             <p className="text-xs text-gray-400 uppercase mb-1">Probable Range</p>
             <p className="text-sm text-gray-500 mb-0.5">(80% interval)</p>
             <p className="text-sm font-medium text-gray-700">
-              {typeof verdict.rangeP10 === 'number' ? verdict.rangeP10.toFixed(2) : '0'}% … {typeof verdict.rangeP90 === 'number' ? verdict.rangeP90.toFixed(2) : '0'}%
+              {typeof verdict.rangeP10 === 'number' ? verdict.rangeP10.toFixed(2) : '0'}% – {typeof verdict.rangeP90 === 'number' ? verdict.rangeP90.toFixed(2) : '0'}%
             </p>
           </div>
         </Tooltip>
