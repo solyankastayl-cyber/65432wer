@@ -607,11 +607,19 @@ export function drawMacroForecast(
   ctx.restore();
   
   // === MACRO MODE: Macro is MAIN, Hybrid is HINT (dashed) ===
-  // Macro = основная сплошная оранжевая линия
-  // Hybrid = второстепенная пунктирная зелёная (подсказка)
-  // Draw ORDER: Macro first (bottom), then Hybrid on top (so dashed line is visible)
+  // For SPX/DXY: Macro = оранжевая, Hybrid = зелёная пунктирная
+  // For BTC: Adjusted = тёмно-синяя (slate), Hybrid = приглушённая зелёная пунктирная
   
-  // === 4. MACRO LINE (orange, solid, thick) - MAIN LINE - draw first ===
+  // Determine colors based on symbol
+  const isBtcMode = symbol === 'BTC';
+  const mainLineColor = isBtcMode ? '#1e3a5f' : '#f59e0b'; // Dark blue for BTC, orange for SPX/DXY
+  const mainLineShadow = isBtcMode ? 'rgba(30, 58, 95, 0.4)' : 'rgba(245, 158, 11, 0.3)';
+  const hintLineColor = isBtcMode ? 'rgba(34, 197, 94, 0.6)' : 'rgba(34, 197, 94, 0.9)'; // Dimmer green for BTC
+  const markerColor = isBtcMode ? '#1e3a5f' : '#f59e0b';
+  
+  // Draw ORDER: Main first (bottom), then Hint on top (so dashed line is visible)
+  
+  // === 4. MAIN LINE (Macro/Adjusted) - solid, thick ===
   if (macroData.length > 0) {
     const points = macroData.map(p => ({
       x: dayToX(p.t),
@@ -619,9 +627,9 @@ export function drawMacroForecast(
     }));
     
     ctx.save();
-    ctx.shadowColor = 'rgba(245, 158, 11, 0.3)';
+    ctx.shadowColor = mainLineShadow;
     ctx.shadowBlur = 8;
-    ctx.strokeStyle = '#f59e0b'; // Orange/amber
+    ctx.strokeStyle = mainLineColor;
     ctx.lineWidth = 3; // Thick - main line
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
@@ -631,7 +639,7 @@ export function drawMacroForecast(
     ctx.restore();
   }
   
-  // === 5. HYBRID LINE (green, dashed) - SECONDARY/HINT - draw on top ===
+  // === 5. HYBRID LINE (hint, dashed) - SECONDARY - draw on top ===
   if (hybridData.length > 0) {
     const points = hybridData.map(p => ({
       x: dayToX(p.t),
@@ -639,7 +647,7 @@ export function drawMacroForecast(
     }));
     
     ctx.save();
-    ctx.strokeStyle = 'rgba(34, 197, 94, 0.9)'; // Green (brighter)
+    ctx.strokeStyle = hintLineColor;
     ctx.lineWidth = 2;
     ctx.setLineDash([8, 6]); // Longer dashes for better visibility
     ctx.lineCap = 'round';
