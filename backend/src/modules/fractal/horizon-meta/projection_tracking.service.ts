@@ -11,7 +11,7 @@
  * - Automatic cleanup of old snapshots
  */
 
-import { getDb } from '../../../db.js';
+import { getDb } from '../../../db/mongodb.js';
 import crypto from 'crypto';
 import type {
   HorizonKey,
