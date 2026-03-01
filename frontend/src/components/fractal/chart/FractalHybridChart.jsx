@@ -93,6 +93,9 @@ export function FractalHybridChart({
   // STATE: Macro overlay data for SPX
   const [macroOverlay, setMacroOverlay] = useState(null);
   
+  // STATE: BTC ∧ SPX overlay data
+  const [btcSpxOverlay, setBtcSpxOverlay] = useState(null);
+  
   // Fetch macro overlay when mode=macro and symbol=SPX
   useEffect(() => {
     if (mode !== 'macro' || symbol !== 'SPX') {
@@ -127,6 +130,33 @@ export function FractalHybridChart({
       })
       .catch(err => {
         console.error('[FractalHybridChart] Cross-asset overlay fetch error:', err);
+      });
+  }, [mode, symbol, focus, API_URL]);
+  
+  // Fetch BTC ∧ SPX overlay when mode=macro and symbol=BTC
+  useEffect(() => {
+    if (mode !== 'macro' || symbol !== 'BTC') {
+      setBtcSpxOverlay(null);
+      return;
+    }
+    
+    // Use BTC overlay endpoint
+    fetch(`${API_URL}/api/overlay/coeffs?base=BTC&driver=SPX&horizon=${focus}`)
+      .then(r => r.json())
+      .then(data => {
+        if (data.ok && data.coeffs) {
+          setBtcSpxOverlay({
+            ok: true,
+            coeffs: data.coeffs,
+            beta: data.coeffs.beta || 0.20,
+            rho: data.coeffs.rho || 0.25,
+            weight: data.coeffs.overlayWeight || 0.50,
+            guard: data.coeffs.guard?.applied || 0.78,
+          });
+        }
+      })
+      .catch(err => {
+        console.error('[FractalHybridChart] BTC overlay fetch error:', err);
       });
   }, [mode, symbol, focus, API_URL]);
   
