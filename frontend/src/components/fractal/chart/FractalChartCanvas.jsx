@@ -151,7 +151,7 @@ function ForecastTooltip({ day, forecastData, currentPrice, horizonDays, symbol 
         {/* MACRO MODE: Show Macro and Hybrid only */}
         {isMacroMode && (
           <>
-            {/* Macro Price - MAIN */}
+            {/* Macro/Adjusted Price - MAIN */}
             {(macroPrice || hybridPrice) && (
               <div style={{ 
                 display: "flex", 
@@ -159,9 +159,9 @@ function ForecastTooltip({ day, forecastData, currentPrice, horizonDays, symbol 
                 padding: '3px 0',
                 borderBottom: '1px solid #f0f0f0'
               }}>
-                <span style={{ color: "#f59e0b", fontWeight: 600, display: 'flex', alignItems: 'center', gap: 3, fontSize: 10 }}>
-                  <span style={{ width: 7, height: 7, borderRadius: '50%', backgroundColor: '#f59e0b' }}></span>
-                  Macro
+                <span style={{ color: "#10B981", fontWeight: 600, display: 'flex', alignItems: 'center', gap: 3, fontSize: 10 }}>
+                  <span style={{ width: 7, height: 7, borderRadius: '50%', backgroundColor: '#10B981' }}></span>
+                  {symbol === 'BTC' ? 'BTC Adjusted' : symbol === 'SPX' ? 'SPX Adjusted' : 'Macro'}
                 </span>
                 <div style={{ textAlign: 'right' }}>
                   <div style={{ fontWeight: 700, fontSize: 11 }}>{formatPrice(macroPrice || hybridPrice)}</div>
@@ -172,19 +172,19 @@ function ForecastTooltip({ day, forecastData, currentPrice, horizonDays, symbol 
               </div>
             )}
             
-            {/* Hybrid Price */}
+            {/* Hybrid Price (dashed) */}
             {hybridPrice && (
               <div style={{ 
                 display: "flex", 
                 justifyContent: "space-between", 
                 padding: '2px 0'
               }}>
-                <span style={{ color: "#16a34a", fontWeight: 500, display: 'flex', alignItems: 'center', gap: 3, fontSize: 9 }}>
-                  <span style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#16a34a' }}></span>
-                  Hybrid
+                <span style={{ color: "#9CA3AF", fontWeight: 500, display: 'flex', alignItems: 'center', gap: 3, fontSize: 9 }}>
+                  <span style={{ width: 6, height: 2, backgroundColor: '#9CA3AF', borderRadius: 1 }}></span>
+                  {symbol === 'BTC' ? 'BTC Hybrid' : symbol === 'SPX' ? 'SPX Hybrid' : 'Hybrid'}
                 </span>
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontWeight: 600, fontSize: 10 }}>{formatPrice(hybridPrice)}</div>
+                  <div style={{ fontWeight: 600, fontSize: 10, color: '#6B7280' }}>{formatPrice(hybridPrice)}</div>
                   <div style={{ fontSize: 8, color: hybridPrice >= currentPrice ? '#22c55e' : '#ef4444' }}>
                     {formatReturn(hybridPrice)}
                   </div>
