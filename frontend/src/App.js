@@ -661,7 +661,7 @@ function App() {
               <Route path="/spx/terminal" element={<SpxTerminalPage />} />
               
               {/* Bitcoin Terminal - /bitcoin route */}
-              <Route path="/bitcoin" element={<BitcoinTerminalPage />} />
+              <Route path="/bitcoin" element={<BtcFractalPage />} />
               
               {/* Combined Terminal - BLOCK C (BTC × SPX) */}
               <Route path="/combined" element={<CombinedTerminalPage />} />
