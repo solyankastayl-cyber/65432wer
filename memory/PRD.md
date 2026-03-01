@@ -114,16 +114,16 @@
 
 ### P0 (Critical) - DONE
 - [x] Deployment
-- [x] BLOCK 77: Adaptive Similarity + Hierarchy (shadow mode)
+- [x] BLOCK 77: Adaptive Similarity + Horizon Hierarchy (shadow mode)
+- [x] BTC Fractal = SPX 1:1 + SPX→BTC Overlay Engine
 
 ### P1 (High Priority)
-- [ ] Enable mode='on' для HorizonMeta (после валидации в shadow)
-- [ ] Multi-horizon aggregation для consensus
-- [ ] Live Tracking Overlay в UI
+- [ ] Добавить реальные данные в btc_candles/spx_candles для полноценных overlay коэффициентов
+- [ ] Enable mode='on' для HorizonMeta
+- [ ] 4-я линия на графике BTC: btcAdjusted (solid) + btcHybrid (dashed) + spxFinal (dashed)
 
 ### P2 (Medium Priority)
-- [ ] SPX DXY-Overlay: adjustedSPX = spxHybrid + beta * (-dxyMacro)
-- [ ] WebSocket исправление
+- [ ] Core Engine improvements (Global vs Asset delta)
 
 ## Next Tasks
 1. Валидация HorizonMeta в shadow mode на реальных данных
