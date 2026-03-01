@@ -680,6 +680,14 @@ async function main() {
   await ensureProjectionTrackingIndexes();
   console.log('[Fractal] ✅ Horizon Meta registered at /api/fractal/horizon-meta/*');
   
+  // ═══════════════════════════════════════════════════════════════
+  // BTC OVERLAY — SPX → BTC Influence Engine (BLOCK 78)
+  // ═══════════════════════════════════════════════════════════════
+  console.log('[Fractal] Registering BTC Overlay (SPX → BTC Influence)...');
+  const { btcOverlayRoutes } = await import('./modules/btc-overlay/index.js');
+  await btcOverlayRoutes(app);
+  console.log('[Fractal] ✅ BTC Overlay registered at /api/overlay/*');
+  
   // Graceful shutdown
   const shutdown = async (signal: string) => {
     console.log(`[Fractal] Received ${signal}, shutting down...`);
