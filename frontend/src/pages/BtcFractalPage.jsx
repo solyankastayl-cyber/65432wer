@@ -802,20 +802,20 @@ const BtcFractalPage = () => {
             ],
           },
           
-          // SPX Overlay data
-          spxOverlay: overlayData ? {
+          // SPX Overlay data - always show section with defaults
+          spxOverlay: {
             baseHybrid: expectedReturn * 100,
             spxImpact: spxImpact,
-            beta: overlayData.beta,
-            rho: overlayData.rho,
-            overlayWeight: overlayData.overlayWeight,
+            beta: overlayData?.beta || 0.20,
+            rho: overlayData?.rho || 0.25,
+            overlayWeight: overlayData?.overlayWeight || 0.50,
             finalAdjusted: finalReturn,
-            corrStability: overlayData.corrStability > 0.7 ? 'STABLE' : 'MODERATE',
-            quality: overlayData.quality,
-            guardLevel: overlayData.guard?.level || 'OK',
-            guard: overlayData.guard?.applied,
-            signalStrength: overlayData.overlayWeight > 0.6 ? 'HIGH' : overlayData.overlayWeight > 0.3 ? 'MEDIUM' : 'LOW',
-          } : null,
+            corrStability: (overlayData?.corrStability || 0.6) > 0.7 ? 'STABLE' : 'MODERATE',
+            quality: overlayData?.quality || 0.70,
+            guardLevel: overlayData?.guard?.level || 'OK',
+            guard: overlayData?.guard?.applied || 0.78,
+            signalStrength: (overlayData?.overlayWeight || 0.5) > 0.6 ? 'HIGH' : (overlayData?.overlayWeight || 0.5) > 0.3 ? 'MEDIUM' : 'LOW',
+          },
         };
         
         setData(transformedData);
