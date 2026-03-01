@@ -489,6 +489,80 @@ export async function buildDxyTerminalPack(
   };
   
   // ═══════════════════════════════════════════════════════════════
+  // 6.7) HORIZON META — Adaptive Similarity + Hierarchy (BLOCK 77)
+  // ═══════════════════════════════════════════════════════════════
+  
+  let horizonMetaSummary: {
+    enabled: boolean;
+    mode: 'shadow' | 'on';
+    consensusState?: 'BULLISH' | 'BEARISH' | 'HOLD';
+    consensusBias?: number;
+    divergenceWarnings?: string[];
+    weightsEff?: Record<number, number>;
+  } | undefined;
+  
+  try {
+    const horizonMetaService = getHorizonMetaService();
+    
+    // Determine bias from decision
+    const forecastBias: HorizonBias = finalDecision.forecastReturn > 0.01 ? 1 
+      : finalDecision.forecastReturn < -0.01 ? -1 : 0;
+    
+    // Build input for horizon meta (single horizon for now)
+    const focusDaysNum = focusDays as HorizonKey;
+    const horizonMetaInput: HorizonMetaInput = {
+      asset: 'DXY',
+      asOf: currentDate,
+      spotCloseAsOf: currentPrice,
+      predSeriesByHorizon: {
+        [focusDaysNum]: hybridPct,
+      },
+      predSeriesType: 'cumReturn',
+      baseConfidenceByHorizon: {
+        [focusDaysNum]: similarity,
+      },
+      stabilityByHorizon: {
+        [focusDaysNum]: 1 - entropy, // Higher entropy = lower stability
+      },
+      biasByHorizon: {
+        [focusDaysNum]: forecastBias,
+      },
+      // realizedClosesAfterAsOf: undefined, // Would need historical tracking for this
+    };
+    
+    const horizonMetaPack = horizonMetaService.compute(horizonMetaInput);
+    
+    if (horizonMetaPack.enabled) {
+      horizonMetaSummary = {
+        enabled: true,
+        mode: horizonMetaPack.mode,
+        consensusState: horizonMetaPack.consensus?.consensusState,
+        consensusBias: horizonMetaPack.consensus?.consensusBias,
+        divergenceWarnings: horizonMetaPack.divergences
+          ?.filter(d => d.decay < 0.7)
+          .map(d => `${d.horizon}D: decay=${d.decay.toFixed(2)}`),
+        weightsEff: horizonMetaPack.consensus?.weightsEff,
+      };
+      
+      // Save projection snapshot for tracking overlay (async, non-blocking)
+      saveProjectionSnapshot({
+        asset: 'DXY',
+        horizon: focusDaysNum,
+        asOf: currentDate,
+        series: hybridPct,
+        confidence: similarity,
+      }).catch(err => console.log('[DXY Terminal] Snapshot save failed:', err.message));
+      
+      // Add meta warning if in shadow mode
+      if (horizonMetaPack.mode === 'shadow' && horizonMetaPack.consensus) {
+        warnings.push(`[SHADOW] HorizonMeta consensus: ${horizonMetaPack.consensus.consensusState}`);
+      }
+    }
+  } catch (err: any) {
+    console.log('[DXY Terminal] HorizonMeta skipped:', err.message);
+  }
+  
+  // ═══════════════════════════════════════════════════════════════
   // 7) BUILD FINAL PACK
   // ═══════════════════════════════════════════════════════════════
   
