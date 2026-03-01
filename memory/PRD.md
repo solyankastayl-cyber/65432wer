@@ -68,6 +68,35 @@
 
 **Тестирование:** 6/8 unit tests passed (100% backend API tests)
 
+### Session 3: BTC Fractal = SPX 1:1 + SPX→BTC Overlay (2026-03-01)
+
+**Реализовано:**
+
+1. **BTC Fractal Page** (`BtcFractalPage.jsx`) - структура 1:1 с SPX:
+   - Header Strip (Signal, Confidence, Risk, Phase)
+   - BTC Verdict Card (Market State, Bias, Projection, Range)
+   - Chart с 4 режимами: Synthetic, Replay, Hybrid, Cross-Asset ★
+   - Forecast by Horizon Table (с колонкой SPX Overlay)
+   - Why This Verdict + Risk Context
+   - Historical Analogs
+   - SPX Overlay Engine секция
+   - Strategy Controls + Forward Performance
+
+2. **SPX→BTC Overlay Engine** (backend `btc-overlay/`):
+   - Формула: `R_adj = R_btc + g × w × β × R_spx`
+   - Rolling beta: `Cov(BTC, SPX) / Var(SPX)`
+   - Rolling correlation: `Corr(BTC, SPX)`
+   - Correlation stability: `1 - std(rolling_rho)`
+   - Overlay weight: `|rho| × stability × quality`
+   - Guard/gate based on regime alignment
+
+**Новые API endpoints:**
+- `GET /api/overlay/coeffs?base=BTC&driver=SPX&horizon=30d`
+- `GET /api/overlay/explain?base=BTC&driver=SPX&horizon=30d`
+- `GET /api/overlay/adjusted-path?base=BTC&driver=SPX&horizon=30d`
+
+**Тестирование:** Backend 95%, Frontend 90%
+
 ## API Endpoints Summary
 
 ### DXY Terminal (обновлено)
